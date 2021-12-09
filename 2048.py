@@ -64,7 +64,6 @@ class Game(tk.Frame):
             font=c.CELL_NUMBER_FONTS[2],
             text="2"
         )
-
         self.score = 0
 
     def stack(self):
@@ -101,13 +100,16 @@ class Game(tk.Frame):
         self.matrix = new_matrix
 
     def add_new_tile(self):
-        row = random.randint(0,3)
-        col = random.randint(0,3)
-        while(self.matrix[row][col] != 0):
+        if any(0 in row for row in self.matrix):
             row = random.randint(0,3)
             col = random.randint(0,3)
-        self.matrix[row][col] = random.choice([2,4])
-
+            while(self.matrix[row][col] != 0):
+                row = random.randint(0,3)
+                col = random.randint(0,3)
+            if random.random() <= 0.1:
+                self.matrix[row][col] = 4
+            else:
+                self.matrix[row][col] = 2
 
     def update_GUI(self):
         for i in range(4):
